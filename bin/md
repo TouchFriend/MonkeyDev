@@ -3,7 +3,7 @@
 export setCmd="set -eo pipefail"
 $setCmd
 
-export PATH=/opt/MonkeyDev/bin:$MonkeyDevTheosPath/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH
+export PATH=/opt/homebrew/bin:/opt/MonkeyDev/bin:$MonkeyDevTheosPath/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH
 
 export scriptName="${0##*/}"
 export scriptVer="4.4"
@@ -241,7 +241,7 @@ function copyFileToDevice() # args: sourceFile, targetDir, hostAddress, hostPort
 		
 	runCmdOnDevice "ssh -p$hostPort root@$hostAddress rm -f \"$targetFilePath\"" "Failed to remove existing file $targetFilePath on device $hostAddress"
 	
-	runCmdOnDevice "scp -P$hostPort \"$sourceFile\" root@$hostAddress:\"$targetFilePath\"" "Failed to copy file $sourceFile to device $hostAddress at directory $targetDir"
+	runCmdOnDevice "scp -P $hostPort \"$sourceFile\" root@$hostAddress:\"$targetFilePath\"" "Failed to copy file $sourceFile to device $hostAddress at directory $targetDir"
 }
 
 function getBashProfileEnvVarValue() # args: envVarName
@@ -397,7 +397,7 @@ function buildPackage() # args: packageDir, outputDir [, useZOption]
 	local packageName
 	local zipFileName
 	
-	echo "Preparing to build package..."
+	echo "Preparing to build package...outputDir:$outputDir"
 	
 	# verify arguments #
 	requireDir "$packageDir"
@@ -484,8 +484,8 @@ function createTarForDebianPackage() # args: sourceDir, outputDir, tarName [, op
 	
 	pushd "$sourceDir" 1> /dev/null
 
-	tar -cLpz --disable-copyfile --exclude ".*" "$@" -f "$outputDir/$tarName.tar.gz" * || \
-		panic $? "Failed to create $tarName archive"
+	gtar -chpz --exclude ".*" "$@" -f "$outputDir/$tarName.tar.gz" * || \
+	panic $? "Failed to create $tarName archive"
 
 	popd 1> /dev/null
 }
@@ -522,7 +522,6 @@ function managePackageOnDevice() # args: manageAction, packageFileOrName, hostAd
 	else
 		panic 1 "Invalid manage action: $manageAction"
 	fi
-	
 	if [[ $hostAddress == "" ]]; then
 	
 		requireExportedVariable "MonkeyDevDeviceIP"
