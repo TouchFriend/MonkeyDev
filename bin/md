@@ -397,7 +397,7 @@ function buildPackage() # args: packageDir, outputDir [, useZOption]
 	local packageName
 	local zipFileName
 	
-	echo "Preparing to build package...outputDir:$outputDir"
+	echo "Preparing to build package..."
 	
 	# verify arguments #
 	requireDir "$packageDir"
