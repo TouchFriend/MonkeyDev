@@ -224,7 +224,28 @@ function pack(){
 	fi
 }
 
+# 删除多余的.app文件
+function deleteUnnecessaryApp(){
+	TARGET_APP_PATH=$(find "${TARGET_APP_PUT_PATH}" -type d | grep "\.app$" | head -n 1)
+	# Extract the last component of the input path
+	APP_NAME=$(basename "${TARGET_APP_PATH}")
+	# Concatenate base_path with appName
+	APP_PATH="${BUILD_APP_PATH}/${APP_NAME}"
+	echo "APP_NAME:${APP_NAME}" "APP_PATH:${APP_PATH}"
+	# Check if the file at appPath exists and delete it if it does
+	if [ -e "${APP_PATH}" ]; then
+		echo "File $APP_PATH exists. Deleting..."
+		rm -rf "$APP_PATH"
+		echo "File deleted."
+	else
+		echo "File $APP_PATH does not exist."
+	fi
+}
+
 if [[ "$1" == "codesign" ]]; then
+	# 删除多余的.app文件
+	deleteUnnecessaryApp
+
 	${MONKEYPARSER} codesign -i "${EXPANDED_CODE_SIGN_IDENTITY}" -t "${BUILD_APP_PATH}"
 	if [[ ${MONKEYDEV_INSERT_DYLIB} == "NO" ]];then
 		rm -rf "${BUILD_APP_PATH}/Frameworks/lib${TARGET_NAME}Dylib.dylib"
