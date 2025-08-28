@@ -107,7 +107,7 @@
 			<key>Debug</key>
 			<dict>
 				<key>OTHER_LDFLAGS</key>
-				<string>$(inherited) -weak_library $(MonkeyDevPath)/Frameworks/libsubstrate.dylib -lcycript -framework RevealServer</string>
+				<string>$(inherited) -weak_library $(MonkeyDevPath)/Frameworks/libsubstrate.dylib -lcycript -framework LookinServer</string>
 				<key>VALIDATE_PRODUCT</key>
 				<string>NO</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
