@@ -4,6 +4,7 @@ source ~/.zshrc
 
 export setCmd="set -eo pipefail"
 export PATH=/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/opt/binutils/bin:$PATH
 $setCmd
 
 export PATH=/opt/MonkeyDev/bin:$MonkeyDevTheosPath/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH
@@ -526,7 +527,9 @@ function createDebianPackage() # args: sourceDir, packageName [, outputDir]
 	echo "2.0" > "$tempDir/debian-binary" || \
 		panic $? "Failed to create debian-binary file"
 	
-	ar -rc "$packageFile" "$tempDir/debian-binary" "$tempDir/control.tar.gz" "$tempDir/data.tar.gz" || \
+	# ar -rc "$packageFile" "$tempDir/debian-binary" "$tempDir/control.tar.gz" "$tempDir/data.tar.gz" || \
+	# 	panic $? "Failed to create Debian archive"
+	gar -rc "$packageFile" "$tempDir/debian-binary" "$tempDir/control.tar.gz" "$tempDir/data.tar.gz" || \
 		panic $? "Failed to create Debian archive"
 
 	echo "Done."
