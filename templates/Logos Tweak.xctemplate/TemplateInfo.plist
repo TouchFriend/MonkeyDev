@@ -126,9 +126,9 @@
 &lt;/plist&gt;</string>
 		</dict>
 		<key>*:debianControl:section</key>
-		<string>Section: System</string>
+		<string>Section: Tweaks</string>
 		<key>*:debianControl:depends</key>
-		<string>Depends: firmware (&gt;= 5.0), mobilesubstrate</string>
+		<string>Depends: mobilesubstrate (>= 0.9.5000)</string>
 	</dict>
 </dict>
 </plist>
