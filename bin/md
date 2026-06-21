@@ -900,16 +900,28 @@ function xcodeBuildPhase() # no args
 
 	if [[ $MonkeyDevRootless == "YES" ]]; then
 		echo "正在替换CydiaFramework依赖路径: $builtExecutable"
-		#这里将默认的/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate路径替换为@rpath/CydiaSubstrate.framework/CydiaSubstrate
-		# 检查是否已经存在 RPATH
-		if ! otool -l "$builtExecutable" | grep -q "LC_RPATH"; then
-			echo "添加依赖库: $MonkeyDevRootless"
-			install_name_tool -add_rpath "/var/jb/Library/Frameworks" "$builtExecutable"
-			install_name_tool -add_rpath "/var/jb/usr/lib" "$builtExecutable"
-			install_name_tool -add_rpath "@loader_path/.jbroot/Library/Frameworks" "$builtExecutable"
-			install_name_tool -add_rpath "@loader_path/.jbroot/usr/lib" "$builtExecutable"
-            install_name_tool -change /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate @rpath/CydiaSubstrate.framework/CydiaSubstrate "$builtExecutable"
-		fi
+
+		install_name_tool \
+		-add_rpath "/var/jb/Library/Frameworks" \
+		"$builtExecutable" 2>/dev/null || true
+
+		install_name_tool \
+		-add_rpath "/var/jb/usr/lib" \
+		"$builtExecutable" 2>/dev/null || true
+
+		install_name_tool \
+		-add_rpath "@loader_path/.jbroot/Library/Frameworks" \
+		"$builtExecutable" 2>/dev/null || true
+
+		install_name_tool \
+		-add_rpath "@loader_path/.jbroot/usr/lib" \
+		"$builtExecutable" 2>/dev/null || true
+
+		install_name_tool \
+		-change \
+		/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate \
+		@rpath/CydiaSubstrate.framework/CydiaSubstrate \
+		"$builtExecutable" 2>/dev/null || true
 	fi
 
 	#如果是Profile，strip可执行文件
