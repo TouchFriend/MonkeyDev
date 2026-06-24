@@ -22,7 +22,7 @@
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<string>$(inherited) @executable_path/Frameworks</string>
 				<key>OTHER_LDFLAGS</key>
-				<string>$(inherited)  -weak_library $(MonkeyDevPath)/Frameworks/libsubstrate.dylib</string>
+				<string>$(inherited)  -weak_library $(MonkeyDevPath)/Frameworks/libellekit.dylib</string>
 				<key>ENABLE_BITCODE</key>
 				<string>NO</string>
 				<key>PRODUCT_NAME</key>
@@ -107,7 +107,7 @@
 			<key>Debug</key>
 			<dict>
 				<key>OTHER_LDFLAGS</key>
-				<string>$(inherited) -weak_library $(MonkeyDevPath)/Frameworks/libsubstrate.dylib -lcycript -framework LookinServer</string>
+				<string>$(inherited) -weak_library $(MonkeyDevPath)/Frameworks/libellekit.dylib -lcycript -framework LookinServer</string>
 				<key>VALIDATE_PRODUCT</key>
 				<string>NO</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
