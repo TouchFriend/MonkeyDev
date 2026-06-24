@@ -153,6 +153,7 @@ function pack(){
 		fi
 		if isRelease; then
 			rm -rf "${TARGET_APP_FRAMEWORKS_PATH}"/RevealServer.framework
+			rm -rf "${TARGET_APP_FRAMEWORKS_PATH}"/LookinServer.framework
 			rm -rf "${TARGET_APP_FRAMEWORKS_PATH}"/libcycript*
 		fi
 	fi
@@ -200,9 +201,9 @@ function pack(){
 		/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ${ORIGIN_BUNDLE_ID}" "${TARGET_INFO_PLIST}"
 	fi
 
-	/usr/libexec/PlistBuddy -c "Delete :CFBundleIconFiles" "${TARGET_INFO_PLIST}"
-	/usr/libexec/PlistBuddy -c "Add :CFBundleIconFiles array" "${TARGET_INFO_PLIST}"
-	/usr/libexec/PlistBuddy -c "Add :CFBundleIconFiles: string ${TARGET_NAME}/icon.png" "${TARGET_INFO_PLIST}"
+	# /usr/libexec/PlistBuddy -c "Delete :CFBundleIconFiles" "${TARGET_INFO_PLIST}"
+	# /usr/libexec/PlistBuddy -c "Add :CFBundleIconFiles array" "${TARGET_INFO_PLIST}"
+	# /usr/libexec/PlistBuddy -c "Add :CFBundleIconFiles: string ${TARGET_NAME}/icon.png" "${TARGET_INFO_PLIST}"
 
 	cp -rf "${TARGET_INFO_PLIST}" "${BUILD_APP_PATH}/Info.plist"
 
